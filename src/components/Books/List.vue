@@ -20,6 +20,10 @@
           <td>{{book.status}}</td>
           <td>{{book.author.firstname +' '+ book.author.name}}</td>
           <td>{{book.category}}</td>
+          <td>
+            <input type="submit" value="supprimer" @click="deleteFunct" class="btn btn-danger">
+            <input type="submit" value="modifier" class="btn btn-primary">
+          </td>
         </tr>
         </tbody>
       </table>

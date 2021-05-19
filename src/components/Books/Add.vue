@@ -10,14 +10,14 @@
       <label class="form-label" for="">status</label>
       <select class="form-control" v-model="categories">
         <option v-for="categorie in categories">
-          {{categorie.name}}
+          {{categorie.status}}
         </option>
       </select>
 
       <label class="form-label" for="">author</label>
-      <select class="form-control" >
-        <option v-for="">
-
+      <select class="form-control" v-model="categories">
+        <option v-for="categorie in categories">
+            {{categorie.category}}
         </option>
       </select>
 
@@ -38,7 +38,7 @@
 import axios from "axios";
 
 export default {
-  name: 'Add',
+  name: 'AddBooks',
   data: function(){
     return{
       books : null,
