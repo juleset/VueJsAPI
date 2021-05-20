@@ -8,23 +8,22 @@
       <input class="form-control"  type="date">
 
       <label class="form-label" for="">status</label>
-      <select class="form-control" v-model="categories">
-        <option v-for="categorie in categories">
-          {{categorie.status}}
-        </option>
-      </select>
-
-      <label class="form-label" for="">author</label>
-      <select class="form-control" v-model="categories">
-        <option v-for="categorie in categories">
-            {{categorie.category}}
-        </option>
-      </select>
-
-      <label class="form-label" for="">categorie</label>
       <select class="form-control" >
-        <option v-for="">
+        <option v-for="book in books">
+          {{book.status}}
+        </option>
+      </select>
 
+      <label class="form-label" for="">Author firstname</label>
+      <input class="form-control"  type="text">
+
+      <label class="form-label" for="">Author name</label>
+      <input class="form-control"  type="text">
+
+      <label class="form-label" for="">Category</label>
+      <select class="form-control" >
+        <option v-for="book in books">
+          {{book.category}}
         </option>
       </select>
       <br>

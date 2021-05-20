@@ -21,16 +21,58 @@
         <td>{{author.death_date}}</td>
         <td>
           <input type="submit" value="supprimer" @click="deleteFunct(author.id)" onclick="return confirm('Etes-vous sur de vouloir supprimer cet item ?');" class="btn btn-danger">
-          <input type="submit" value="modifier" class="btn btn-primary">
+          <button type="button" @click="editModal(author)" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            modifier
+          </button>
         </td>
       </tr>
       </tbody>
     </table>
+
+    <!-- Modal -->
+    <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title" id="exampleModalLongTitle">Edit Author</h2>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form @submit.prevent="updateAuthor()">
+              <div class="form-group">
+                <label for="recipient-name" class="col-form-label">Firstname:</label>
+                <input type="text" v-model="form.firstname" class="form-control" id="">
+              </div>
+              <div class="form-group">
+                <label for="recipient-name" class="col-form-label">Name:</label>
+                <input type="text" v-model="form.name" class="form-control" id="recipient-name">
+              </div>
+              <div class="form-group">
+                <label for="recipient-name" class="col-form-label">Birthday:</label>
+                <input type="date" v-model="form.birthday" class="form-control" id="">
+              </div>
+              <div class="form-group">
+                <label for="recipient-name" class="col-form-label">Death date:</label>
+                <input type="date" v-model="form.death_date" class="form-control" id="">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+            <button type="button" class="btn btn-primary">Valider</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import Form from "vform";
 
 export default {
   name: 'List',
@@ -38,9 +80,15 @@ export default {
     return{
       authors : null,
       error : null,
-      category: {
+      author: {
         id: null,
-      }
+      },
+      form: new Form({
+        firstname: '',
+        name: '',
+        birthday: '',
+        death_date: '',
+      })
     }
   },
   mounted: function(){
@@ -67,6 +115,24 @@ export default {
             window.location.reload()
           }
         )
+        .catch((error) => {
+          this.error = 'Une erreur est survenue : '+ error;
+        });
+    },
+    editModal(author){
+      this.form.reset();
+      $('#edit').modal('show');
+      this.form.fill(author);
+    },
+    updateAuthor(){
+      // console.log('Editing data');
+      this.form.put('http://127.0.0.1:8000/api/authors/'+this.form.id)
+        .then((response) => {
+          // success
+          console.log('edit ok', response)
+          $('#edit').modal('hide');
+
+        })
         .catch((error) => {
           this.error = 'Une erreur est survenue : '+ error;
         });
