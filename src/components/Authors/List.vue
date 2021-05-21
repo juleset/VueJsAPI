@@ -61,7 +61,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-            <button type="button" class="btn btn-primary">Valider</button>
+            <button type="button" @click="updateAuthor" class="btn btn-primary">Valider</button>
           </div>
         </div>
       </div>
@@ -84,6 +84,7 @@ export default {
         id: null,
       },
       form: new Form({
+        id: '',
         firstname: '',
         name: '',
         birthday: '',
@@ -126,11 +127,18 @@ export default {
     },
     updateAuthor(){
       // console.log('Editing data');
-      this.form.put('http://127.0.0.1:8000/api/authors/'+this.form.id)
+      this.form.put('http://127.0.0.1:8000/api/authors/'+this.form.id,{
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${"vgufWBM3OYa6UJboDmXH6LuurORFXWmjlNMbqaC9"}`
+        }
+      })
         .then((response) => {
           // success
           console.log('edit ok', response)
           $('#edit').modal('hide');
+          window.location.reload();
 
         })
         .catch((error) => {

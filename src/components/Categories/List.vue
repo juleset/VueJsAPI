@@ -43,7 +43,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-            <button type="button" class="btn btn-primary">Valider</button>
+            <button type="button" @click="updateCateg" class="btn btn-primary">Valider</button>
           </div>
         </div>
       </div>
@@ -66,6 +66,7 @@ export default {
         id: null,
       },
       form: new Form({
+        id: '',
         name: '',
       })
     }
@@ -116,7 +117,7 @@ export default {
           // success
           console.log('edit ok', response)
           $('#edit').modal('hide');
-
+          window.location.reload();
         })
         .catch((error) => {
           this.error = 'Une erreur est survenue : '+ error;
